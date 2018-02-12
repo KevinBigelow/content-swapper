@@ -65,35 +65,28 @@ function gotMessage(message, sender, sendResponse) {
 
     var target = message.target,
         targetCount = $('body ' + target).length,
-        content = message.content,
-        namesCount = Object.keys(peopleNames).length,
-        companiesCount = Object.keys(companyNames).length;
+        content = message.content;
 
     if (content == 'names') {
+        var dict = peopleNames,
+            dictCount = Object.keys(peopleNames).length;
+    } else if (content == 'companies') {
+        var dict = companyNames,
+            dictCount = Object.keys(companyNames).length;
+    }
+
+    if (content == 'custom') {
+        $(message.target).text(message.content);
+    } else {
         var i = 1;
         
         $(target).each(function(){
-            $(this).text(peopleNames[i]);
-            if (i === namesCount) {
-                i = 1
+            $(this).text(dict[i]);
+            if (i === dictCount) {
+                i = 1;
             } else {
-                i = i + 1
+                i = i + 1;
             }
         });
-
-    } else if (content == 'companies') {
-        var i = 1;
-
-        $(target).each(function(){
-            $(this).text(companyNames[i]);
-            if (i === companiesCount) {
-                i = 1
-            } else {
-                i = i + 1
-            }
-        });
-
-    } else {
-        $(message.target).text(message.content);
     }
 }
