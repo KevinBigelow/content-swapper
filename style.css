@@ -21,3 +21,12 @@ form {
 input {
     margin-bottom: 5px;
 }
+
+label, input {
+    width: 100%;
+    display: block;
+}
+
+.custom-content-wrap {
+    display: none;
+}

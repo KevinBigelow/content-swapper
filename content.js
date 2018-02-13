@@ -65,7 +65,8 @@ function gotMessage(message, sender, sendResponse) {
 
     var target = message.target,
         targetCount = $('body ' + target).length,
-        content = message.content;
+        content = message.content,
+        customContent = message.customContent;
 
     if (content == 'names') {
         var dict = peopleNames,
@@ -76,7 +77,7 @@ function gotMessage(message, sender, sendResponse) {
     }
 
     if (content == 'custom') {
-        $(message.target).text(message.content);
+        $(message.target).text(message.customContent);
     } else {
         var i = 1;
         
