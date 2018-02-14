@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "Content Swapper",
+  "name": "SwappyCopy",
   "version": "0.1",
   "description": "Manipulate the DOM when the page is done loading",
 
