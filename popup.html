@@ -2,32 +2,25 @@
 
 <html>
     <head>
-        <title>Content Swapper</title>
-        <style type="text/css">
-            body {
-                margin: 10px;
-                white-space: nowrap;
-            }
-            
-            h1 {
-                font-size: 15px;
-            }
-            
-            #container {
-                align-items: center;
-                display: flex;
-                justify-content: space-between;
-            }
-        </style>
+        <title>SwappyCopy</title>
+        <link rel="stylesheet" href="style.css">
     </head>
 
     <body>
-        <h1>Content Swapper</h1>
-        <form class="update-dom" method="post">
-            <label for="target-dom">Target</label>
-            <input class="target-dom" type="text"/>
-            <label for="dummy-content">Dummy Content</label>
-            <input class="dummy-content" type="text"/>
+        <h1>SwappyCopy</h1>
+        <form class="content-swapper" method="post">
+            <label for="target-element">Target</label>
+            <input class="target-element" type="text"/>
+            <label for="content-type">Dummy Content</label>
+            <select class="content-type">
+                <option value="names">Names</option>
+                <option value="companies">Companies</option>
+                <option value="custom">Custom</option>
+            </select>
+            <div class="custom-content-wrap">
+                <label for="custom-content">Custom Content</label>
+                <input class="custom-content" type="text"/>
+            </div>
             <button type="submit" class="submit">Go</span>
         </form>
     </body>
