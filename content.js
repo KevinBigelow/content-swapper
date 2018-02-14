@@ -64,9 +64,7 @@ var peopleNames = {
 function gotMessage(message, sender, sendResponse) {
 
     var targetElement = message.targetElement,
-        targetCount = $('body ' + targetElement).length,
-        contentType = message.contentType,
-        customContent = message.customContent;
+        contentType = message.contentType;
 
     if (contentType == 'names') {
         var dict = peopleNames,
@@ -77,7 +75,7 @@ function gotMessage(message, sender, sendResponse) {
     }
 
     if (contentType == 'custom') {
-        $(message.targetElement).text(message.customContent);
+        $(targetElement).text(message.customContent);
     } else {
         var i = 1;
         $(targetElement).each(function(){
