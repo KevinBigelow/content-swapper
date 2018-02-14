@@ -63,30 +63,29 @@ var peopleNames = {
 
 function gotMessage(message, sender, sendResponse) {
 
-    var target = message.target,
-        targetCount = $('body ' + target).length,
-        content = message.content,
+    var targetElement = message.targetElement,
+        targetCount = $('body ' + targetElement).length,
+        contentType = message.contentType,
         customContent = message.customContent;
 
-    if (content == 'names') {
+    if (contentType == 'names') {
         var dict = peopleNames,
             dictCount = Object.keys(peopleNames).length;
-    } else if (content == 'companies') {
+    } else if (contentType == 'companies') {
         var dict = companyNames,
             dictCount = Object.keys(companyNames).length;
     }
 
-    if (content == 'custom') {
-        $(message.target).text(message.customContent);
+    if (contentType == 'custom') {
+        $(message.targetElement).text(message.customContent);
     } else {
         var i = 1;
-        
-        $(target).each(function(){
+        $(targetElement).each(function(){
             $(this).text(dict[i]);
             if (i === dictCount) {
                 i = 1;
             } else {
-                i = i + 1;
+                i++;
             }
         });
     }
