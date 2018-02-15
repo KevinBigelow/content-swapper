@@ -1,7 +1,6 @@
-
 chrome.runtime.onMessage.addListener(gotMessage);
 
-var companyNames = {
+var companies = {
     1: 'Acme Corporation',
     2: 'Globex Corporation',
     3: 'Soylent Corp',
@@ -25,10 +24,10 @@ var companyNames = {
     21: 'Ollivanders Wand Shop',
     22: 'Cheers',
     23: 'Krusty Krab',
-    24: 'Good Burger',
-}
+    24: 'Good Burger'
+};
 
-var peopleNames = {
+var names = {
     1: 'Bradley Mueller',
     2: 'Clara Heath',
     3: 'Davis Logan',
@@ -58,26 +57,21 @@ var peopleNames = {
     27: 'Marshall Ray',
     28: 'Xander Conrad',
     29: 'Dante Burke',
-    30: 'Tristian Hartman',
-}
+    30: 'Tristian Hartman'
+};
 
 function gotMessage(message, sender, sendResponse) {
 
     var targetElement = message.targetElement,
         contentType = message.contentType;
 
-    if (contentType == 'names') {
-        var dict = peopleNames,
-            dictCount = Object.keys(peopleNames).length;
-    } else if (contentType == 'companies') {
-        var dict = companyNames,
-            dictCount = Object.keys(companyNames).length;
-    }
-
     if (contentType == 'custom') {
         $(targetElement).text(message.customContent);
     } else {
-        var i = 1;
+        var i = 1,
+            dict = window[contentType],
+            dictCount = Object.keys(dict).length;
+
         $(targetElement).each(function(){
             $(this).text(dict[i]);
             if (i === dictCount) {
