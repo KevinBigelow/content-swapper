@@ -69,12 +69,11 @@ function gotMessage(message, sender, sendResponse) {
         $(targetElement).text(message.customContent);
     } else {
         var i = 1,
-            dict = window[contentType],
-            dictCount = Object.keys(dict).length;
+            contentItems = window[contentType];
 
         $(targetElement).each(function(){
-            $(this).text(dict[i]);
-            if (i === dictCount) {
+            $(this).text(contentItems[i]);
+            if (i === Object.keys(contentItems).length) {
                 i = 1;
             } else {
                 i++;
