@@ -27,6 +27,6 @@ label, input {
     display: block;
 }
 
-.custom-content-wrap {
+.custom-content-wrap, .number-options {
     display: none;
 }

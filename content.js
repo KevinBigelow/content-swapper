@@ -67,6 +67,26 @@ function gotMessage(message, sender, sendResponse) {
 
     if (contentType == 'custom') {
         $(targetElement).text(message.customContent);
+
+    } else if (contentType == 'numbers') {
+        var digits = message.digitCount,
+            prefix = message.numberPrefix,
+            suffix = message.numberSuffix;
+
+        $(targetElement).each(function(){
+            var number = Math.round(Math.random() * digits);
+
+            if (prefix != '') {
+                number = prefix.concat(number);
+            }
+
+            if (suffix != '') {
+                number = number.concat(suffix);
+            }
+
+            $(this).text(number);
+        });
+
     } else {
         var i = 1,
             contentItems = window[contentType];
