@@ -8,15 +8,15 @@ $(document).on('submit', '.content-swapper', function(e) {
 
     chrome.tabs.query(queryInfo, gotTabs);
 
-    var targetElement = $('.target-element').val(),
-        contentType = $('.content-type').val(),
-        customContent = $('.custom-content').val(),
-        digitCount = $('.digit-count').val(),
-        numberPrefix = $('.number-prefix').val(),
-        numberSuffix = $('.number-suffix').val();
-
     function gotTabs(tab) {
-        var message = {'targetElement': targetElement, 'contentType': contentType, 'customContent': customContent, 'digitCount': digitCount, 'numberPrefix': numberPrefix, 'numberSuffix': numberSuffix}
+        var message = {
+            'targetElement': $('.target-element').val(),
+            'contentType': $('.content-type').val(),
+            'customContent': $('.custom-content').val(),
+            'digitCount': $('.digit-count').val(),
+            'numberPrefix': $('.number-prefix').val(),
+            'numberSuffix': $('.number-suffix').val()
+        }
         chrome.tabs.sendMessage(tab[0].id, message)
     }
 });
@@ -24,14 +24,14 @@ $(document).on('submit', '.content-swapper', function(e) {
 $(document).on('change', '.content-type', function() {
 
     if ($(this).val() == 'custom') {
-        $('.custom-content-wrap').fadeIn();
+        $('.custom-content-fields').fadeIn();
     } else {
-        $('.custom-content-wrap').fadeOut();
+        $('.custom-content-fields').fadeOut();
     }
 
     if ($(this).val() == 'numbers') {
-        $('.number-options').fadeIn();
+        $('.number-fields').fadeIn();
     } else {
-        $('.number-options').fadeOut();
+        $('.number-fields').fadeOut();
     }
 });

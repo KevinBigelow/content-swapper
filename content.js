@@ -76,11 +76,11 @@ function gotMessage(message, sender, sendResponse) {
         $(targetElement).each(function(){
             var number = Math.round(Math.random() * digits);
 
-            if (prefix != '') {
+            if (prefix) {
                 number = prefix.concat(number);
             }
 
-            if (suffix != '') {
+            if (suffix) {
                 number = number.concat(suffix);
             }
 
