@@ -67,14 +67,33 @@ function gotMessage(message, sender, sendResponse) {
 
     if (contentType == 'custom') {
         $(targetElement).text(message.customContent);
-    } else {
-        var i = 1,
-            dict = window[contentType],
-            dictCount = Object.keys(dict).length;
+
+    } else if (contentType == 'numbers') {
+        var digits = message.digitCount,
+            prefix = message.numberPrefix,
+            suffix = message.numberSuffix;
 
         $(targetElement).each(function(){
-            $(this).text(dict[i]);
-            if (i === dictCount) {
+            var number = Math.round(Math.random() * digits);
+
+            if (prefix) {
+                number = prefix.concat(number);
+            }
+
+            if (suffix) {
+                number = number.concat(suffix);
+            }
+
+            $(this).text(number);
+        });
+
+    } else {
+        var i = 1,
+            contentItems = window[contentType];
+
+        $(targetElement).each(function(){
+            $(this).text(contentItems[i]);
+            if (i === Object.keys(contentItems).length) {
                 i = 1;
             } else {
                 i++;
