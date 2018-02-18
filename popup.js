@@ -13,7 +13,8 @@ $(document).on('submit', '.content-swapper', function(e) {
             'targetElement': $('.target-element').val(),
             'contentType': $('.content-type').val(),
             'customContent': $('.custom-content').val(),
-            'digitCount': $('.digit-count').val(),
+            'numberMin': $('.number-min').val(),
+            'numberMax': $('.number-max').val(),
             'numberPrefix': $('.number-prefix').val(),
             'numberSuffix': $('.number-suffix').val()
         }

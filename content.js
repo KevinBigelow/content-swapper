@@ -69,21 +69,14 @@ function gotMessage(message, sender, sendResponse) {
         $(targetElement).text(message.customContent);
 
     } else if (contentType == 'numbers') {
-        var digits = message.digitCount,
-            prefix = message.numberPrefix,
-            suffix = message.numberSuffix;
+        var numberMin = message.numberMin,
+            numberMax = message.numberMax,
+            numberRange = numberMax - numberMin;
 
         $(targetElement).each(function(){
-            var number = Math.round(Math.random() * digits);
+            var number = Math.floor(Math.random() * numberRange) + parseFloat(numberMin);
 
-            if (prefix) {
-                number = prefix.concat(number);
-            }
-
-            if (suffix) {
-                number = number.concat(suffix);
-            }
-
+            number = message.numberPrefix + number + message.numberSuffix;
             $(this).text(number);
         });
 
