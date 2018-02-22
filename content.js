@@ -70,11 +70,10 @@ function gotMessage(message, sender, sendResponse) {
 
     } else if (contentType == 'numbers') {
         var numberMin = message.numberMin,
-            numberMax = message.numberMax,
-            numberRange = numberMax - numberMin;
+            numberMax = message.numberMax;
 
         $(targetElement).each(function(){
-            var number = Math.floor(Math.random() * numberRange) + parseFloat(numberMin);
+            var number = Math.floor(Math.random() * (numberMax - numberMin + 1)) + parseFloat(numberMin);
 
             if (message.numberThousandsSeparator == true) {
                 number = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
