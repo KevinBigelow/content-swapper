@@ -67,14 +67,35 @@ function gotMessage(message, sender, sendResponse) {
 
     if (contentType == 'custom') {
         $(targetElement).text(message.customContent);
-    } else {
-        var i = 1,
-            dict = window[contentType],
-            dictCount = Object.keys(dict).length;
+
+    } else if (contentType == 'numbers') {
+        var numberMin = message.numberMin,
+            numberMax = message.numberMax;
 
         $(targetElement).each(function(){
-            $(this).text(dict[i]);
-            if (i === dictCount) {
+            var randomNumber = Math.random() * (numberMax - numberMin + 1) + parseFloat(numberMin);
+
+            if (message.numberDecimals !== 0) {
+                randomNumber = Number.parseFloat(randomNumber).toFixed(message.numberDecimals);
+            } else {
+                randomNumber = Math.floor(randomNumber);
+            }
+
+            if (message.numberThousandsSeparator == true) {
+                randomNumber = randomNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            }
+
+            $(this).text(message.numberPrefix + randomNumber + message.numberSuffix);
+        });
+
+    } else {
+        var contentItems = window[contentType],
+            i = 1;
+
+        $(targetElement).each(function(){
+            $(this).text(contentItems[i]);
+
+            if (i === Object.keys(contentItems).length) {
                 i = 1;
             } else {
                 i++;
