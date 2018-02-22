@@ -17,6 +17,7 @@ $(document).on('submit', '.content-swapper', function(e) {
             'numberMax': $('.number-max').val(),
             'numberPrefix': $('.number-prefix').val(),
             'numberSuffix': $('.number-suffix').val(),
+            'numberDecimals': $('.number-decimals').val(),
             'numberThousandsSeparator': $('.number-thousands-separator').prop('checked')
         }
         chrome.tabs.sendMessage(tab[0].id, message)

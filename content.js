@@ -73,19 +73,25 @@ function gotMessage(message, sender, sendResponse) {
             numberMax = message.numberMax;
 
         $(targetElement).each(function(){
-            var number = Math.floor(Math.random() * (numberMax - numberMin + 1)) + parseFloat(numberMin);
+            var randomNumber = Math.random() * (numberMax - numberMin + 1) + parseFloat(numberMin);
 
-            if (message.numberThousandsSeparator == true) {
-                number = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            if (message.numberDecimals !== 0) {
+                randomNumber = Number.parseFloat(randomNumber).toFixed(message.numberDecimals);
+            } else {
+                randomNumber = Math.floor(randomNumber);
             }
 
-            number = message.numberPrefix + number + message.numberSuffix;
-            $(this).text(number);
+            if (message.numberThousandsSeparator == true) {
+                randomNumber = randomNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            }
+
+            randomNumber = message.numberPrefix + randomNumber + message.numberSuffix;
+            $(this).text(randomNumber);
         });
 
     } else {
-        var i = 1,
-            contentItems = window[contentType];
+        var contentItems = window[contentType],
+            i = 1;
 
         $(targetElement).each(function(){
             $(this).text(contentItems[i]);
