@@ -85,8 +85,7 @@ function gotMessage(message, sender, sendResponse) {
                 randomNumber = randomNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             }
 
-            randomNumber = message.numberPrefix + randomNumber + message.numberSuffix;
-            $(this).text(randomNumber);
+            $(this).text(message.numberPrefix + randomNumber + message.numberSuffix);
         });
 
     } else {
@@ -95,6 +94,7 @@ function gotMessage(message, sender, sendResponse) {
 
         $(targetElement).each(function(){
             $(this).text(contentItems[i]);
+
             if (i === Object.keys(contentItems).length) {
                 i = 1;
             } else {
