@@ -76,6 +76,10 @@ function gotMessage(message, sender, sendResponse) {
         $(targetElement).each(function(){
             var number = Math.floor(Math.random() * numberRange) + parseFloat(numberMin);
 
+            if (message.numberThousandsSeparator == true) {
+                number = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+
             number = message.numberPrefix + number + message.numberSuffix;
             $(this).text(number);
         });
