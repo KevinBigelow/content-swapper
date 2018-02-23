@@ -73,18 +73,17 @@ function gotMessage(message, sender, sendResponse) {
             numberMax = message.numberMax;
 
         $(targetElement).each(function(){
-            var randomNumber = Math.random() * (numberMax - numberMin + 1) + parseFloat(numberMin);
+            var randomNumber = Math.random() * (numberMax - numberMin) + parseFloat(numberMin);
 
-            if (message.numberDecimals !== 0) {
-                randomNumber = Number.parseFloat(randomNumber).toFixed(message.numberDecimals);
-            } else {
-                randomNumber = Math.floor(randomNumber);
-            }
+            // Round randomNumber to the specified decimal
+            randomNumber = Number.parseFloat(randomNumber).toFixed(message.numberDecimals);
 
+            // Add thousands separator (comma) to randomNumber
             if (message.numberThousandsSeparator == true) {
                 randomNumber = randomNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             }
 
+            // Print randomNumber with prefix and suffix
             $(this).text(message.numberPrefix + randomNumber + message.numberSuffix);
         });
 
