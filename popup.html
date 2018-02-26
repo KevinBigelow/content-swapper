@@ -1,49 +1,35 @@
-<!doctype html>
-
-<html>
-    <head>
-        <title>SwappyCopy</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-
-    <body>
-        <h1>SwappyCopy</h1>
-        <form class="content-swapper" method="post">
-            <label for="target-element">Target</label>
-            <input class="target-element" type="text"/>
-            <label for="content-type">Dummy Content</label>
-            <select class="content-type">
-                <option value="names">Names</option>
-                <option value="companies">Companies</option>
-                <option value="numbers">Numbers</option>
-                <option value="custom">Custom</option>
-            </select>
-            <div class="custom-content-fields hide">
-                <label for="custom-content">Custom Content</label>
-                <input class="custom-content" type="text"/>
-            </div>
-            <div class="number-fields hide">
-                <label for="number-min">Min</label>
-                <input class="number-min" type="tel"/>
-                <label for="number-max">Max</label>
-                <input class="number-max" type="tel"/>
-                <label for="number-prefix">Prefix</label>
-                <input class="number-prefix" type="text"/>
-                <label for="number-suffix">Suffix</label>
-                <input class="number-suffix" type="text"/>
-                <label for="number-decimals">Decimals</label>
-                <select class="number-decimals">
-                    <option value="0" selected="selected">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-                <label for="number-thousands-separator"><input class="number-thousands-separator" type="checkbox"/>Add Commas</label>
-            </div>
-            <button type="submit" class="submit">Go</span>
-        </form>
-    </body>
-  
-    <script src="jquery-3.2.1.min.js"></script>
-    <script src="popup.js"></script>
-</html>
+<h1>SwappyCopy</h1>
+<form class="content-swapper" method="post">
+    <label for="target-element">Target</label>
+    <input class="target-element" type="text"/>
+    <label for="content-type">Dummy Content</label>
+    <select class="content-type">
+        <option value="names">Names</option>
+        <option value="companies">Companies</option>
+        <option value="numbers">Numbers</option>
+        <option value="custom">Custom</option>
+    </select>
+    <div class="custom-content-fields hide">
+        <label for="custom-content">Custom Content</label>
+        <input class="custom-content" type="text"/>
+    </div>
+    <div class="number-fields hide">
+        <label for="number-min">Min</label>
+        <input class="number-min" type="tel"/>
+        <label for="number-max">Max</label>
+        <input class="number-max" type="tel"/>
+        <label for="number-prefix">Prefix</label>
+        <input class="number-prefix" type="text"/>
+        <label for="number-suffix">Suffix</label>
+        <input class="number-suffix" type="text"/>
+        <label for="number-decimals">Decimals</label>
+        <select class="number-decimals">
+            <option value="0" selected="selected">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+        <label for="number-thousands-separator"><input class="number-thousands-separator" type="checkbox"/>Add Commas</label>
+    </div>
+    <button type="submit" class="submit">Go</span>
+</form>

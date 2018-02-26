@@ -62,6 +62,34 @@ var names = {
 
 function gotMessage(message, sender, sendResponse) {
 
+    $('body').append(message.div);
+    $('.swappycopy__popup').load(chrome.runtime.getURL(message.popup));
+    insertPopupCss(chrome.runtime.getURL(message.stylesheet));
+}
+
+function insertPopupCss(filename) {
+    var link = $('<link />', {
+        rel: "stylesheet",
+        type: "text/css",
+        href: filename
+    })
+    $('head').append(link);
+}
+
+$(document).on('submit', '.content-swapper', function(e) {
+    e.preventDefault();
+
+    var message = {
+        'targetElement': $('.target-element').val(),
+        'contentType': $('.content-type').val(),
+        'customContent': $('.custom-content').val(),
+        'numberMin': $('.number-min').val(),
+        'numberMax': $('.number-max').val(),
+        'numberPrefix': $('.number-prefix').val(),
+        'numberSuffix': $('.number-suffix').val(),
+        'numberDecimals': $('.number-decimals').val(),
+        'numberThousandsSeparator': $('.number-thousands-separator').prop('checked')
+    }
     var targetElement = message.targetElement,
         contentType = message.contentType;
 
@@ -101,4 +129,19 @@ function gotMessage(message, sender, sendResponse) {
             }
         });
     }
-}
+});
+
+$(document).on('change', '.content-type', function() {
+
+    if ($(this).val() == 'custom') {
+        $('.custom-content-fields').fadeIn();
+    } else {
+        $('.custom-content-fields').fadeOut();
+    }
+
+    if ($(this).val() == 'numbers') {
+        $('.number-fields').fadeIn();
+    } else {
+        $('.number-fields').fadeOut();
+    }
+});
