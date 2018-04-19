@@ -102,3 +102,18 @@ function gotMessage(message, sender, sendResponse) {
         });
     }
 }
+
+$(document).ready(function() {
+    var contentItems = names,
+        i = 1;
+
+    $('p').each(function(){
+        $(this).text(contentItems[i]);
+
+        if (i === Object.keys(names).length) {
+            i = 1;
+        } else {
+            i++;
+        }
+    });
+});
