@@ -26,6 +26,7 @@ var companies = {
     23: 'Krusty Krab',
     24: 'Good Burger'
 };
+
 var companiesSlugPrefix = {
     1: 'neutron-interactive_acme-corporation',
     2: 'neutron-interactive_globex-corporation',
@@ -51,7 +52,7 @@ var companiesSlugPrefix = {
     22: 'neutron-interactive_cheers',
     23: 'neutron-interactive_krusty-krab',
     24: 'neutron-interactive_good-burger',
-}
+};
 
 var companiesSlug = {
     1: 'acme-corporation',
@@ -78,7 +79,7 @@ var companiesSlug = {
     22: 'cheers',
     23: 'krusty-krab',
     24: 'good-burger',
-}
+};
 
 var names = {
     1: 'Bradley Mueller',
@@ -111,6 +112,24 @@ var names = {
     28: 'Xander Conrad',
     29: 'Dante Burke',
     30: 'Tristian Hartman'
+};
+
+var fileNames = {
+    1: 'snow-company.8011234567.04192018.mp3',
+    2: 'tree-llc.4354561234.04192018.mp3',
+    3: 'goldhouse.8019876543.04_15_2018.mp3',
+    4: 'sweethouse.8011112222.04_17_2018.mp3',
+    5: 'cloud-calls.4354321234.03_20_2018.mp3',
+    6: 'wood-lake.4350129876.02_14_2018.mp3',
+    7: 'yellowbrick.8013334444.02_02_2018.mp3',
+    8: 'vehement-capital-partners',
+    9: 'ensign.8015566655.01042018.mp3',
+    10: 'redearth-llc.8014326543.01222018.mp3',
+    11: 'cacti-company.8019998888.03032018.mp3',
+    12: 'stylus.4355559854.04_01_2018.mp3',
+    13: 'cosmos.2019874567.04_02_2018.mp3',
+    14: 'ripping-rippers.6035439872.02_11_2018.mp3',
+    15: 'chalk-it-up.3249873333.04_06_2018.mp3',
 };
 
 function gotMessage(message, sender, sendResponse) {
