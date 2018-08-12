@@ -1,34 +1,5 @@
-body {
-    margin: 10px;
-    white-space: nowrap;
-}
-
-h1 {
-    font-size: 15px;
-}
-
-#container {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-input {
-    margin-bottom: 5px;
-}
-
-label, input {
-    width: 100%;
-    display: block;
-}
-
-.hide {
-    display: none;
+.swappycopy__popup, .swappycopy__popup * {
+    all: initial;
 }
 
 .swappycopy__popup {
@@ -40,4 +11,56 @@ label, input {
     border: 1px solid #000;
     background: #ffffff;
     padding: 10px;
+}
+
+.swappycopy__popup body {
+    margin: 10px;
+    white-space: nowrap;
+}
+
+.swappycopy__popup #container {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.swappycopy__popup form {
+    display: flex;
+    flex-direction: column;
+}
+
+.swappycopy__popup input, .swappycopy__popup select {
+    margin-bottom: 5px;
+    border: 1px solid #000;
+}
+
+.swappycopy__popup label, .swappycopy__popup input:not([type='checkbox']) {
+    width: 100%;
+    display: block;
+}
+
+.swappycopy__popup input[type='checkbox'] {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+
+.swappycopy__popup input[type='checkbox']:checked {
+    background: #000;
+}
+
+.swappycopy__popup button {
+    background: blue;
+    color: #fff;
+    text-align: center;
+}
+
+.swappycopy__popup .hide {
+    display: none;
+}
+
+.swappycopy__popup a {
+    background: blue;
+    display: block;
+    padding: 5px;
 }

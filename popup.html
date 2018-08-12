@@ -3,6 +3,28 @@
 <form class="content-swapper" method="post">
     <label for="target-element">Target</label>
     <input class="target-element" type="text"/>
+    <div class="sw-js__element-builder">
+        <div class="sw-js__tag hide">
+            <h3>Tag</h3>
+            <span class="sw__btn-group"></span>
+        </div>
+        <div class="sw-js__classes hide">
+            <h3>Classes</h3>
+            <span class="sw__btn-group"></span>
+        </div>
+        <div class="sw-js__id hide">
+            <h3>Id</h3>
+            <span class="sw__btn-group"></span>
+        </div>
+        <div class="sw-js__value hide">
+            <h3>Value</h3>
+            <span class="sw__btn-group"></span>
+        </div>
+        <div class="sw-js__copy hide">
+            <h3>Copy</h3>
+            <span class="sw__btn-group"></span>
+        </div>
+    </div>
     <label for="content-type">Dummy Content</label>
     <select class="content-type">
         <option value="names">Names</option>
@@ -32,5 +54,5 @@
         </select>
         <label for="number-thousands-separator"><input class="number-thousands-separator" type="checkbox"/>Add Commas</label>
     </div>
-    <button type="submit" class="submit">Go</span>
+    <a type="submit" class="submit">Go</a>
 </form>

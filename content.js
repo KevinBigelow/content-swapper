@@ -1,4 +1,10 @@
+debugger;
+
 chrome.runtime.onMessage.addListener(gotMessage);
+
+/* ---------------------
+    Content Objects
+----------------------- */
 
 var companies = {
     1: 'Acme Corporation',
@@ -60,15 +66,22 @@ var names = {
     30: 'Tristian Hartman'
 };
 
+
+
+/* -----------------------------------------------------------------------------
+    SC Functions
+----------------------------------------------------------------------------- */
+
 function gotMessage(message, sender, sendResponse) {
 
     $('body').append(message.div);
     $('.swappycopy__popup').load(chrome.runtime.getURL(message.popup));
     insertPopupCss(chrome.runtime.getURL(message.stylesheet));
+    elementSelector();
 }
 
 function insertPopupCss(filename) {
-    var link = $('<link />', {
+    let link = $('<link />', {
         rel: "stylesheet",
         type: "text/css",
         href: filename
@@ -76,10 +89,16 @@ function insertPopupCss(filename) {
     $('head').append(link);
 }
 
+
+
+/* -----------------------------------------------------------------------------
+    Form Submission
+----------------------------------------------------------------------------- */
+
 $(document).on('submit', '.content-swapper', function(e) {
     e.preventDefault();
 
-    var message = {
+    var formData = {
         'targetElement': $('.target-element').val(),
         'contentType': $('.content-type').val(),
         'customContent': $('.custom-content').val(),
@@ -89,35 +108,36 @@ $(document).on('submit', '.content-swapper', function(e) {
         'numberSuffix': $('.number-suffix').val(),
         'numberDecimals': $('.number-decimals').val(),
         'numberThousandsSeparator': $('.number-thousands-separator').prop('checked')
-    }
-    var targetElement = message.targetElement,
-        contentType = message.contentType;
+    };
+
+    var targetElement = formData.targetElement;
+    var contentType = formData.contentType;
 
     if (contentType == 'custom') {
-        $(targetElement).text(message.customContent);
+        $(targetElement).text(formData.customContent);
 
     } else if (contentType == 'numbers') {
-        var numberMin = message.numberMin,
-            numberMax = message.numberMax;
+        var numberMin = formData.numberMin
+        var numberMax = formData.numberMax;
 
         $(targetElement).each(function(){
             var randomNumber = Math.random() * (numberMax - numberMin) + parseFloat(numberMin);
 
             // Round randomNumber to the specified decimal
-            randomNumber = Number.parseFloat(randomNumber).toFixed(message.numberDecimals);
+            randomNumber = Number.parseFloat(randomNumber).toFixed(formData.numberDecimals);
 
             // Add thousands separator (comma) to randomNumber
-            if (message.numberThousandsSeparator == true) {
+            if (formData.numberThousandsSeparator == true) {
                 randomNumber = randomNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             }
 
             // Print randomNumber with prefix and suffix
-            $(this).text(message.numberPrefix + randomNumber + message.numberSuffix);
+            $(this).text(formData.numberPrefix + randomNumber + formData.numberSuffix);
         });
 
     } else {
-        var contentItems = window[contentType],
-            i = 1;
+        var contentItems = window[contentType];
+        var i = 1;
 
         $(targetElement).each(function(){
             $(this).text(contentItems[i]);
@@ -130,6 +150,12 @@ $(document).on('submit', '.content-swapper', function(e) {
         });
     }
 });
+
+
+
+/* -----------------------------------------------------------------------------
+    Form Field Interactivity
+----------------------------------------------------------------------------- */
 
 $(document).on('change', '.content-type', function() {
 
@@ -146,27 +172,98 @@ $(document).on('change', '.content-type', function() {
     }
 });
 
-function allElementsFromPoint(x, y) {
-    var element, elements = [];
-    var old_visibility = [];
-    while (true) {
-        element = document.elementFromPoint(x, y);
-        if (!element || element === document.documentElement) {
-            break;
+
+
+/* -----------------------------------------------------------------------------
+    Element Selection
+----------------------------------------------------------------------------- */
+
+function elementSelector() {
+
+    $(document).on('click', function(e) {
+        let eventTarget = e.target;
+        let domElement = $(eventTarget)[0];
+        let tagName = domElement.tagName.toLowerCase();
+        let bannedTags = new Array('html', 'body', 'img', 'svg');
+
+        if (!eventTarget.closest('.swappycopy__popup')) {
+
+            if (eventTarget.tagName === 'A') {
+                e.preventDefault();
+            }
+
+            if (bannedTags.indexOf(tagName) === -1) {
+                resetElementBuilder();
+                $('.target-element').val(tagName);
+                printTagName(domElement);
+                printClasses(domElement);
+                printId(domElement);
+                printValue(domElement);
+                printCopy(domElement);
+            }
         }
-        elements.push(element);
-        old_visibility.push(element.style.visibility);
-        element.style.visibility = 'hidden'; // Temporarily hide the element (without changing the layout)
-    }
-    for (var k = 0; k < elements.length; k++) {
-        elements[k].style.visibility = old_visibility[k];
-    }
-    elements.reverse();
-    return elements;
-    $('print-element').text(elements);
+    });
 }
 
-$(document).on('click', function() {
-    $('#print-element').text(document.querySelectorAll(':hover'));
-    console.log(document.querySelectorAll(':hover'));
-})
+function resetElementBuilder() {
+    
+    let elementTypes = [
+        '.sw-js__tag',
+        '.sw-js__classes',
+        '.sw-js__id',
+        '.sw-js__value',
+        '.sw-js__copy',
+    ]
+
+    for (var i = 0; i <= elementTypes.length; i++) {
+        let element = elementTypes[i];
+
+        $(element).find('.sw__btn-group').empty();
+    }
+}
+
+function printTagName(element) {
+    let tagName = element.tagName.toLowerCase();
+
+    $('.sw-js__element-builder .sw-js__tag .sw__btn-group').append('<a class="sw__addTarget" value="' + tagName + '">' + tagName + '</a>');
+    $('.sw-js__element-builder .sw-js__tag').fadeIn();
+}
+
+function printClasses(element) {
+    let classes = element.classList;
+    let classCount = classes.length;
+
+    if (classCount != 0) {
+        for (var i = 0; i < classCount; i++) {
+            $('.sw-js__element-builder .sw-js__classes .sw__btn-group').append('<a class="sw__addTarget" value=".' + classes[i] + '">.' + classes[i] + '</a>');
+        }
+        $('.sw-js__element-builder .sw-js__classes').fadeIn();
+    }
+}
+
+function printId(element) {
+    let id = element.id;
+
+    if (id != '') {
+        $('.sw-js__element-builder .sw-js__id .sw__btn-group').append('<a class="sw__addTarget" value="#' + id + '">#' + id + '</a>');
+        $('.sw-js__element-builder .sw-js__id').fadeIn();
+    }
+}
+
+function printValue(element) {
+    let value = $(element).val();
+    
+    if (value != '') {
+        $('.sw-js__element-builder .sw-js__value .sw__btn-group').append('<a class="sw__addTarget" value="' + value + '">' + value + '</a>');
+        $('.sw-js__element-builder .sw-js__value').fadeIn();
+    }
+}
+
+function printCopy(element) {
+    let copy = $(element).text();
+
+    if (copy != '') {
+        $('.sw-js__element-builder .sw-js__copy .sw__btn-group').append('<a class="sw__addTarget" value="' + copy + '">' + copy + '</a>');
+        $('.sw-js__element-builder .sw-js__copy').fadeIn();
+    }
+}

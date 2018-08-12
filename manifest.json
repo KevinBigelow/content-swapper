@@ -3,12 +3,16 @@
 
     "name": "SwappyCopy",
     "version": "0.1",
-    "description": "Manipulate the DOM when the page is done loading",
+    "description": "Alter the content on any webpage",
+
+    "permissions": [
+        "activeTab"
+    ],
 
     "content_scripts": [ {
         "js": [ "jquery-3.2.1.min.js", "content.js" ],
         "matches": [ "http://*/*", "https://*/*"],
-        "run_at": "document_end"
+        "run_at": "document_idle"
     }],
 
     "background": {
