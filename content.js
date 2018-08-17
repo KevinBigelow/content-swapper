@@ -1,6 +1,6 @@
 debugger;
 
-chrome.runtime.onMessage.addListener(gotMessage);
+chrome.runtime.onMessage.addListener(extensionOpened);
 
 /* ---------------------
     Content Objects
@@ -72,7 +72,7 @@ var names = {
     SC Functions
 ----------------------------------------------------------------------------- */
 
-function gotMessage(message, sender, sendResponse) {
+function extensionOpened(message, sender, sendResponse) {
 
     $('body').append(message.div);
     $('.swappycopy__popup').load(chrome.runtime.getURL(message.popup));
@@ -99,7 +99,7 @@ $(document).on('submit', '.content-swapper', function(e) {
     e.preventDefault();
 
     var formData = {
-        'targetElement': $('.target-element').val(),
+        'targetElement': $('.sw-js__target-element').val(),
         'contentType': $('.content-type').val(),
         'customContent': $('.custom-content').val(),
         'numberMin': $('.number-min').val(),
@@ -194,7 +194,7 @@ function elementSelector() {
 
             if (bannedTags.indexOf(tagName) === -1) {
                 resetElementBuilder();
-                $('.target-element').val(tagName);
+//                 $('.target-element').val(tagName);
                 printTagName(domElement);
                 printClasses(domElement);
                 printId(domElement);
@@ -206,26 +206,29 @@ function elementSelector() {
 }
 
 function resetElementBuilder() {
-    
-    let elementTypes = [
+
+    let $targetElement = $('.sw-js__target-element');
+    let selectorTypes = [
         '.sw-js__tag',
         '.sw-js__classes',
         '.sw-js__id',
         '.sw-js__value',
         '.sw-js__copy',
-    ]
+    ];
 
-    for (var i = 0; i <= elementTypes.length; i++) {
-        let element = elementTypes[i];
+    $targetElement.val('');
 
-        $(element).find('.sw__btn-group').empty();
+    for (var i = 0; i <= selectorTypes.length; i++) {
+        let selector = selectorTypes[i];
+
+        $(selector).find('.sw__btn-group').empty();
     }
 }
 
 function printTagName(element) {
     let tagName = element.tagName.toLowerCase();
 
-    $('.sw-js__element-builder .sw-js__tag .sw__btn-group').append('<a class="sw__addTarget" value="' + tagName + '">' + tagName + '</a>');
+    $('.sw-js__element-builder .sw-js__tag .sw__btn-group').append('<a class="sw-js__add-selector" data-type="tag" data-value="' + tagName + '">' + tagName + '</a>');
     $('.sw-js__element-builder .sw-js__tag').fadeIn();
 }
 
@@ -235,7 +238,7 @@ function printClasses(element) {
 
     if (classCount != 0) {
         for (var i = 0; i < classCount; i++) {
-            $('.sw-js__element-builder .sw-js__classes .sw__btn-group').append('<a class="sw__addTarget" value=".' + classes[i] + '">.' + classes[i] + '</a>');
+            $('.sw-js__element-builder .sw-js__classes .sw__btn-group').append('<a class="sw-js__add-selector" data-type="class" data-value=".' + classes[i] + '">.' + classes[i] + '</a>');
         }
         $('.sw-js__element-builder .sw-js__classes').fadeIn();
     }
@@ -245,7 +248,7 @@ function printId(element) {
     let id = element.id;
 
     if (id != '') {
-        $('.sw-js__element-builder .sw-js__id .sw__btn-group').append('<a class="sw__addTarget" value="#' + id + '">#' + id + '</a>');
+        $('.sw-js__element-builder .sw-js__id .sw__btn-group').append('<a class="sw-js__add-selector" data-type="id" data-value="#' + id + '">#' + id + '</a>');
         $('.sw-js__element-builder .sw-js__id').fadeIn();
     }
 }
@@ -254,7 +257,7 @@ function printValue(element) {
     let value = $(element).val();
     
     if (value != '') {
-        $('.sw-js__element-builder .sw-js__value .sw__btn-group').append('<a class="sw__addTarget" value="' + value + '">' + value + '</a>');
+        $('.sw-js__element-builder .sw-js__value .sw__btn-group').append('<a class="sw-js__add-selector" data-type="value" data-value="' + value + '">' + value + '</a>');
         $('.sw-js__element-builder .sw-js__value').fadeIn();
     }
 }
@@ -263,7 +266,48 @@ function printCopy(element) {
     let copy = $(element).text();
 
     if (copy != '') {
-        $('.sw-js__element-builder .sw-js__copy .sw__btn-group').append('<a class="sw__addTarget" value="' + copy + '">' + copy + '</a>');
+        $('.sw-js__element-builder .sw-js__copy .sw__btn-group').append('<a class="sw-js__add-selector" data-type="copy" data-value="' + copy + '">' + copy + '</a>');
         $('.sw-js__element-builder .sw-js__copy').fadeIn();
     }
+}
+
+
+
+/* -----------------------------------------------------------------------------
+    Append/Remove from target Field
+----------------------------------------------------------------------------- */
+
+$(document).on('click', '.sw-js__add-selector', function() {
+    
+    let selector = $(this).data('value');
+    let selectorType = $(this).data('type');
+    let $targetElement = $('.sw-js__target-element');
+    let targetElementValue = ''
+    console.log(targetElementValue);
+
+    if (selectorType == 'tag') {
+        targetElementValue = selector + $targetElement.val();
+        console.log(targetElementValue);
+    } else if (selectorType == 'copy') {
+        targetElementValue = $targetElement.val() + ':contains("' + selector + '")';
+        console.log(targetElementValue);
+    } else {
+        targetElementValue = $targetElement.val() + selector;
+        console.log(targetElementValue);
+    }
+
+    $targetElement.val(targetElementValue);
+    console.log(targetElementValue);
+
+    $(this).removeClass('sw-js__add-selector');
+    $(this).addClass('sw-js__remove-selector');
+});
+
+
+function appendToTarget() {
+
+}
+
+function removeFromTarget() {
+    
 }
