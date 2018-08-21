@@ -95,7 +95,11 @@ function insertPopupCss(filename) {
     Form Submission
 ----------------------------------------------------------------------------- */
 
-$(document).on('submit', '.content-swapper', function(e) {
+$(document).on('click', '.sc-js__submit', function() {
+    $('.sc-js__swap-form').submit();
+});
+
+$(document).on('submit', '.sc-js__swap-form', function(e) {
     e.preventDefault();
 
     var formData = {
@@ -110,6 +114,7 @@ $(document).on('submit', '.content-swapper', function(e) {
         'numberThousandsSeparator': $('.number-thousands-separator').prop('checked')
     };
 
+    /* FIXME: Ensure Swappy Copy elements are secure from being swapped */
     var targetElement = formData.targetElement;
     var contentType = formData.contentType;
 
@@ -186,6 +191,7 @@ function elementSelector() {
         let tagName = domElement.tagName.toLowerCase();
         let bannedTags = new Array('html', 'body', 'img', 'svg');
 
+        /* FIXME: Set limits for number of descendants */
         if (!eventTarget.closest('.swappycopy__popup')) {
 
             if (eventTarget.tagName === 'A') {
@@ -207,8 +213,8 @@ function elementSelector() {
 
 function resetElementBuilder() {
 
-    let $targetElement = $('.sw-js__target-element');
-    let selectorTypes = [
+    const $targetElement = $('.sw-js__target-element');
+    const selectorTypes = [
         '.sw-js__tag',
         '.sw-js__classes',
         '.sw-js__id',
@@ -219,22 +225,22 @@ function resetElementBuilder() {
     $targetElement.val('');
 
     for (var i = 0; i <= selectorTypes.length; i++) {
-        let selector = selectorTypes[i];
+        const selector = selectorTypes[i];
 
         $(selector).find('.sw__btn-group').empty();
     }
 }
 
 function printTagName(element) {
-    let tagName = element.tagName.toLowerCase();
+    const tagName = element.tagName.toLowerCase();
 
     $('.sw-js__element-builder .sw-js__tag .sw__btn-group').append('<a class="sw-js__add-selector" data-type="tag" data-value="' + tagName + '">' + tagName + '</a>');
     $('.sw-js__element-builder .sw-js__tag').fadeIn();
 }
 
 function printClasses(element) {
-    let classes = element.classList;
-    let classCount = classes.length;
+    const classes = element.classList;
+    const classCount = classes.length;
 
     if (classCount != 0) {
         for (var i = 0; i < classCount; i++) {
@@ -245,7 +251,7 @@ function printClasses(element) {
 }
 
 function printId(element) {
-    let id = element.id;
+    const id = element.id;
 
     if (id != '') {
         $('.sw-js__element-builder .sw-js__id .sw__btn-group').append('<a class="sw-js__add-selector" data-type="id" data-value="#' + id + '">#' + id + '</a>');
@@ -254,7 +260,7 @@ function printId(element) {
 }
 
 function printValue(element) {
-    let value = $(element).val();
+    const value = $(element).val();
     
     if (value != '') {
         $('.sw-js__element-builder .sw-js__value .sw__btn-group').append('<a class="sw-js__add-selector" data-type="value" data-value="' + value + '">' + value + '</a>');
@@ -263,7 +269,19 @@ function printValue(element) {
 }
 
 function printCopy(element) {
-    let copy = $(element).text();
+    const copy = $(element).text();
+    
+/*
+    if (copy.indexOf('\'') == -1) {
+        const copyEscapedSingleQuotes = $(copy).replace(/\\([\s\S])|(')/g,"\\$1$2");
+        console.log(copyEscapedSingleQuotes);
+    }
+
+    if (copy.indexOf('\"') == -1) {
+        const copyEscapedDoubleQuotes = $(copy).replace(/\\([\s\S])|(")/g,"\\$1$2");
+        console.log(copyEscapedDoubleQuotes);
+    }
+*/
 
     if (copy != '') {
         $('.sw-js__element-builder .sw-js__copy .sw__btn-group').append('<a class="sw-js__add-selector" data-type="copy" data-value="' + copy + '">' + copy + '</a>');
@@ -277,37 +295,33 @@ function printCopy(element) {
     Append/Remove from target Field
 ----------------------------------------------------------------------------- */
 
+function appendToTarget() {}
+function removeFromTarget() {}
+
 $(document).on('click', '.sw-js__add-selector', function() {
-    
-    let selector = $(this).data('value');
-    let selectorType = $(this).data('type');
-    let $targetElement = $('.sw-js__target-element');
-    let targetElementValue = ''
-    console.log(targetElementValue);
+
+    const selector = $(this).data('value');
+    const selectorType = $(this).data('type');
+    const $targetElement = $('.sw-js__target-element');
+    let targetElementValue = '';
 
     if (selectorType == 'tag') {
         targetElementValue = selector + $targetElement.val();
-        console.log(targetElementValue);
+
     } else if (selectorType == 'copy') {
         targetElementValue = $targetElement.val() + ':contains("' + selector + '")';
-        console.log(targetElementValue);
+        $(this).addClass('sw-js__copy-in-selector');
+
     } else {
-        targetElementValue = $targetElement.val() + selector;
-        console.log(targetElementValue);
+        if ($('.sw-js__copy-in-selector')) {
+            targetElementValue = $targetElement.val() + selector;
+        } else {
+            targetElementValue = $targetElement.val() + selector;
+        }
     }
 
     $targetElement.val(targetElementValue);
-    console.log(targetElementValue);
 
     $(this).removeClass('sw-js__add-selector');
     $(this).addClass('sw-js__remove-selector');
 });
-
-
-function appendToTarget() {
-
-}
-
-function removeFromTarget() {
-    
-}
