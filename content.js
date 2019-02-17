@@ -185,7 +185,7 @@ $(document).on('change', '.content-type', function() {
 
 function elementSelector() {
 
-    $(document).on('click', function(e) {
+    $(document).click(function(e) {
         let eventTarget = e.target;
         let domElement = $(eventTarget)[0];
         let tagName = domElement.tagName.toLowerCase();
