@@ -194,13 +194,12 @@ function elementSelector() {
         /* FIXME: Set limits for number of descendants */
         if (!eventTarget.closest('.swappycopy__popup')) {
 
-            if (eventTarget.tagName === 'A') {
+            if (tagName === 'a') {
                 e.preventDefault();
             }
 
             if (bannedTags.indexOf(tagName) === -1) {
                 resetElementBuilder();
-//                 $('.target-element').val(tagName);
                 printTagName(domElement);
                 printClasses(domElement);
                 printId(domElement);
